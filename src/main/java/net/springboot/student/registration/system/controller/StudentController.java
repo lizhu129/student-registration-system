@@ -38,6 +38,21 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
+    // Update student API
+    @PutMapping("/students/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable long Id, @RequestBody Student student2) {
+        Student student = studentRepository.findById(Id)
+                .orElseThrow(() -> new ResourceNotFound("Student doesn't exist with ID :" + Id));
+
+        student.setFirstName(student2.getFirstName());
+        student.setLastName(student2.getLastName());
+        student.setEmail(student2.getEmail());
+
+        Student updatedStudent = studentRepository.save(student);
+
+        return ResponseEntity.ok(updatedStudent);
+    }
+
 
 
 
